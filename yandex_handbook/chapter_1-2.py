@@ -138,3 +138,44 @@ for j in range(1, n):
         min_idx = j
 
 print(best_i + 1, best_j + 1)
+
+'''
+    Дан массив a, состоящий из n чисел, и q запросов. Каждый запрос состоит из одного целого числа x_i.
+    Найдите и выведите индекс p_i, который является первым, самым левым, вхождением числа x_i в массив a. Если x_i не встречается среди элементов массива, то p_i = -1.
+    Формат ввода
+    Первая строка содержит два разделённых пробелом числа n и q — количество чисел в массиве и количество запросов соответственно.
+    Вторая строка содержит n чисел a_i, где a_i — число на i-й позиции в массиве a. Числа разделены пробелами.
+    Далее идут q строк, каждая строка содержит ровно одно число x_i — очередной запрос.
+    Формат вывода
+    Для каждого запроса выведите p_i — индекс первого (самого левого) вхождения x_i в массив, или -1, если такого числа нет.
+'''
+class ListNode:
+    def __init__(self, val: int, next: "ListNode | None" = None):
+        self.val: int = val
+        self.next: "ListNode | None" = next
+
+class LinkedList:
+    def __init__(self, size, arr: list[int]):
+        self.front = ListNode(arr[0])
+        self.size: int = size
+        curr_node = self.front
+        for _ in range(1, self.size):
+            curr_node.next = ListNode(arr[_])
+            curr_node = curr_node.next
+            
+        self.first_pos = {}
+        curr_node, curr_ind = self.front, 1
+        while curr_node is not None:
+            if curr_node.val not in self.first_pos:
+                self.first_pos[curr_node.val] = curr_ind
+            curr_node = curr_node.next
+            curr_ind += 1
+
+    def search(self, val: int) -> int:
+        return self.first_pos.get(val, -1)
+
+n, q = input().split(' ')
+arr = list(map(int, input().split(' ')))
+llist = LinkedList(int(n), arr)
+for _ in range(int(q)):
+    print(llist.search(int(input())))
