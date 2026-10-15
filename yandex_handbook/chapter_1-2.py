@@ -179,3 +179,46 @@ arr = list(map(int, input().split(' ')))
 llist = LinkedList(int(n), arr)
 for _ in range(int(q)):
     print(llist.search(int(input())))
+
+'''
+    Дан массив a, состоящий из n чисел.
+    Для каждой позиции i (1 ≤ i ≤ n) вычислите величину
+    text
+    b_i = min(a[1], a[2], …, a[i])
+    То есть b_i — минимум среди первых i элементов массива (префиксный минимум).
+    Формат ввода
+    Первая строка содержит единственное число n — количество чисел в массиве.
+    Вторая строка содержит n чисел a_i, где a_i — число на i-й позиции в массиве a. Числа разделены пробелами.
+    Формат вывода
+    В оригинале не указан, но подразумевается: вывести n чисел b_1, b_2, …, b_n, разделённых пробелами (или каждое на новой строке — зависит от тестов).
+'''
+class ListNode:
+    def __init__(self, val: int, next: "ListNode | None" = None):
+        self.val: int = val
+        self.next: "ListNode | None" = next
+
+class LinkedList:
+    def __init__(self, size, arr: list[int]):
+        self.front = ListNode(arr[0])
+        self.size: int = size
+        curr_node = self.front
+        for _ in range(1, self.size):
+            curr_node.next = ListNode(arr[_])
+            curr_node = curr_node.next
+
+    def min_before(self):
+        curr_min = self.front.val
+        curr_node, res = self.front, ''
+        while curr_node is not None:
+            if curr_node.val < curr_min:
+                res += f' {curr_node.val}'
+                curr_min = curr_node.val
+            else:
+                res += f' {curr_min}'
+            curr_node = curr_node.next
+        return res
+
+n = int(input())
+arr = list(map(int, input().split(' ')))
+llist = LinkedList(n, arr)
+print(llist.min_before())
