@@ -46,3 +46,27 @@ for _ in range(q):
     to_do, item = request
     if to_do == '1': s.add_item(int(item))
     else: print(s.check_item(int(item)))
+
+''' B '''
+class ByteArraySet:
+    def __init__(self):
+        self.table = bytearray(1000001)
+        self.size = 0
+        
+    def add_item(self, x):
+        if self.table[x] == 0:
+            self.table[x] = 1
+            self.size += 1
+            
+    def check_item(self, x):
+        return self.table[x]
+
+n = int(input())
+s = ByteArraySet()
+
+for _ in range(n):
+    row = list(map(int, input().split()))
+    for x in row[1:]:
+        s.add_item(x)
+
+print(s.size)
