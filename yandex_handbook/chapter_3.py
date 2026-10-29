@@ -100,3 +100,25 @@ for _ in range(n - 1):
     mask &= curr_mask
 
 print(mask.bit_count())
+
+''' D '''
+counts = {}
+set_sizes = []
+q = int(input())
+
+for i in range(q):
+    data = input().split()
+    k, nums = data[0], set(data[1:])
+    set_sizes.append(int(k))
+    for _ in nums:
+        counts[_] = counts.get(_, 0) + 1
+
+vals = counts.values()
+core_size = sum(1 for val in vals if val == q)
+
+if any(1 < times < q for times in vals):
+    print('NO')
+else:
+    print('YES')
+    print(core_size)
+    print(' '.join(str(set_size - core_size) for set_size in set_sizes))
