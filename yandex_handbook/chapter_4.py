@@ -10,3 +10,13 @@ for i in range(n):
         dt[x] = y
     else:
         print(dt.get(x, -1))
+
+''' B '''
+dt = {}
+n = int(input())
+nums = list(map(int, input().split()))
+for num in nums:
+    dt[num] = dt.get(num, 0) + 1
+
+mx = max(dt.values())
+print(sorted([key for key, val in dt.items() if val == mx])[0])
