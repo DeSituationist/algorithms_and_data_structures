@@ -70,3 +70,33 @@ for _ in range(n):
         s.add_item(x)
 
 print(s.size)
+
+''' C '''
+import sys
+
+data = sys.stdin.buffer.read().split()
+it = iter(data) 
+
+n = int(next(it))
+k = int(next(it))
+
+mask_bytes = bytearray(125001)
+
+for _ in range(k):
+    x = int(next(it))
+    mask_bytes[x >> 3] |= (1 << (x & 7))
+
+mask = int.from_bytes(mask_bytes, 'little')
+
+for _ in range(n - 1):
+    k = int(next(it))
+    curr_bytes = bytearray(125001)
+    
+    for _ in range(k):
+        x = int(next(it))
+        curr_bytes[x >> 3] |= (1 << (x & 7))
+        
+    curr_mask = int.from_bytes(curr_bytes, 'little')
+    mask &= curr_mask
+
+print(mask.bit_count())
