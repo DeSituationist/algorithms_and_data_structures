@@ -122,3 +122,19 @@ else:
     print('YES')
     print(core_size)
     print(' '.join(str(set_size - core_size) for set_size in set_sizes))
+    
+''' E '''
+n = int(input())
+nums = list(map(int, input().split()))
+
+prev = set()
+all_vals = set()
+
+for x in nums:
+    cur = {x}
+    for v in prev:
+        cur.add(v | x)
+    all_vals.update(cur)
+    prev = cur
+
+print(len(all_vals))
